@@ -4,15 +4,13 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "init-timeline": "node src/script/initializeTimeline.js",
-    "dev": "nodemon src/script/initializeTimeline.js"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "init-timeline": "node src/script/initializeTimeline.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "engines": {
+    "node": ">=18.x"
+  },
   "dependencies": {
     "axios": "^1.12.2",
     "dotenv": "^17.2.3",
