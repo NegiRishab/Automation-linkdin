@@ -1,0 +1,42 @@
+# Node modules
+node_modules/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build output
+dist/
+build/
+coverage/
+.cache/
+
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+
+# Dependency directories
+bower_components/
+
+# TypeScript
+*.tsbuildinfo
+
+# Misc
+*.pid
+*.seed
+*.pid.lock
