@@ -100,42 +100,91 @@ s
 
 export const generatePost = async (timelineItem) => {
   const prompt = `
-You are an experienced software engineer who documents your daily progress on LinkedIn in a human, thoughtful way.
-Write a short LinkedIn post (2–3 paragraphs, around 120–180 words) based on the following engineering log:
+You are an experienced software engineer documenting your daily developer grind on LinkedIn — sharing authentic, consistent updates that reflect real progress, learning, and persistence.
 
+Write a short (120–180 words) LinkedIn post using the following engineering log:
+
+Day: ${timelineItem.day}
 Phase: ${timelineItem.phase}
 Topic: ${timelineItem.topic}
 Today's Task: ${timelineItem.todayTask}
 Challenges: ${timelineItem.challenges}
 
-Your goal:
-Create a post that feels personal, useful, and easy to read — something fellow engineers can learn from or relate to.
+🎯 Goal:
+Craft a visually appealing, human post that looks like part of a daily "build in public" series. It should feel thoughtful, useful, and show steady momentum.
 
-Formatting rules:
-- Use short paragraphs (1–3 lines each).
-- Add simple markdown-style headers for readability (e.g., “**Today’s focus:**”, “**Key challenge:**”, “**Reflection:**”).
-- Leave a blank line between sections for visual breathing space.
-- Avoid emojis, hashtags, or over-the-top excitement.
-- Keep the tone conversational, humble, and insightful.
-- Emphasize what was learned, not just what was done.
-- End with a friendly, reflective question or invitation for discussion (e.g., “How do you approach this in your projects?”).
+🪄 Style & Formatting Rules:
+- Start with a dynamic day header like:
+  💻 **Day ${timelineItem.day} — [short motivational or progress phrase]**
+  Examples:  
+  - 💻 **Day 5 — Keeping the Streak Alive**  
+  - ⚙️ **Day 3 — Deep in the Code Grind**  
+  - 🚀 **Day 7 — Consistency Over Intensity**  
+  - 🧠 **Day 10 — Learning by Building**  
 
-Example structure:
+- Immediately after, add a bold or italic **title line** related to today's topic or task, e.g.:
+  🔧 *${timelineItem.topic}*  
+  or  
+  🛠️ **${timelineItem.todayTask}**
+
+- Then, use the following clean structure:
+  🧩 **Focus —** Describe what you worked on today and why it mattered.  
+  🚧 **Challenge —** Explain the main technical or design struggle you faced.  
+  💡 **Lesson —** Share what you learned, improved, or realized.  
+
+- End with 1–2 lines reflecting your daily progress and commitment, then add a light, friendly question prefixed with 🤔 to invite discussion.
+
+✨ Writing Style:
+- Keep paragraphs short (1–3 lines each).  
+- Use 3–5 emojis total for visual rhythm — subtle, not flashy.  
+- Keep tone authentic, humble, and curious — not promotional.  
+- Use **bold** for key terms (e.g., tools, frameworks, insights).  
+- Avoid hashtags, excessive punctuation, or hype language.  
+- Leave blank lines between sections for readability.  
+
+📘 Example Output:
 ---
-### 🚀 {Phase or Topic}
+💻 **Day 5 — Keeping the Streak Alive**
 
-**Today’s focus:**  
-Brief summary of what was worked on and why it mattered.
+🔧 **Building the Foundations for Microservices**
 
-**Key challenge:**  
-Explain what made it tricky and how you solved or approached it.
+🧩 **Focus —**  
+Today was all about laying the groundwork for **DevSync’s MainService** and **ChatService** using **NestJS** and **Node.js**. I integrated **Redis Pub/Sub** for smoother microservice communication — a choice that boosts speed and reliability for real-time collaboration.
 
-**Reflection:**  
-Share a short insight or takeaway. End with a light question inviting others to share their thoughts.
+🚧 **Challenge —**  
+Defining clear service boundaries turned out trickier than expected. Each microservice needs to own its domain while still playing nicely with others. Finding that balance took some iteration and patience.
+
+💡 **Lesson —**  
+Creating clear **DTOs (Data Transfer Objects)** for each service contract helped clarify dependencies and streamline communication.
+
+🔥 Day 5 done — consistency over intensity.  
+🤔 How do you usually approach defining service boundaries in your projects?
 ---
 
-Now, write the full LinkedIn post following this format and tone. Keep it genuine, easy to read, and technically meaningful.
+Now, generate the full LinkedIn post following this tone, structure, and visual style.
 `;
-  return prompt;
+
+
+
+  try {
+    const completion = await client.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [{ role: "user", content: prompt }],
+      temperature: 0.6,
+      max_tokens: 1000,
+    });
+
+    let rawOutput = completion.choices?.[0]?.message?.content?.trim();
+    if (!rawOutput) throw new Error("Empty response from AI model.");
+
+    // 🧹 Optional: clean markdown code block fences (if any)
+    rawOutput = rawOutput.replace(/^```(?:\w+)?/i, "").replace(/```$/, "").trim();
+
+    return rawOutput; // ✅ return the post text directly
+  } catch (err) {
+    console.error("❌ Error generating post:", err.message);
+    if (err.response?.data) console.error(err.response.data);
+    throw err;
+  }
 };
 

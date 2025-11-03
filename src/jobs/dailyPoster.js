@@ -5,7 +5,9 @@ import { createLinkedInDraft } from "../services/linkedinService.js";
 export async function runDailyPoster() {
   try {
     const today = new Date().getDate();
-    const post = await Post.findOne({ day: today, status: "pending" });
+   // Get the next pending day post (lowest day not completed)
+const post = await Post.findOne({ status: "pending" }).sort({ day: 1 });
+
 
     if (!post) {
       console.log("⚠️ No post data found for today.");
