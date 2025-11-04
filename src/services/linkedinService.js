@@ -8,7 +8,7 @@ export async function createLinkedInDraft(content) {
       "https://api.linkedin.com/v2/ugcPosts",
       {
         author: `urn:li:person:${process.env.LINKEDIN_USER_URN}`,
-        lifecycleState: "DRAFT",
+        lifecycleState: "PUBLISHED",
         specificContent: {
           "com.linkedin.ugc.ShareContent": {
             shareCommentary: { text: content },

@@ -104,65 +104,74 @@ You are an experienced software engineer documenting your daily developer grind 
 
 Write a short (120–180 words) LinkedIn post using the following engineering log:
 
-Day: ${timelineItem.day}
-Phase: ${timelineItem.phase}
-Topic: ${timelineItem.topic}
-Today's Task: ${timelineItem.todayTask}
-Challenges: ${timelineItem.challenges}
+Day: \${timelineItem.day}
+Phase: \${timelineItem.phase}
+Topic: \${timelineItem.topic}
+Today's Task: \${timelineItem.todayTask}
+Challenges: \${timelineItem.challenges}
 
 🎯 Goal:
-Craft a visually appealing, human post that looks like part of a daily "build in public" series. It should feel thoughtful, useful, and show steady momentum.
+Craft a visually appealing, human post that looks like part of a daily "build in public" series. It should feel thoughtful, useful, and show steady momentum — like a developer sharing their journey, not marketing.
 
 🪄 Style & Formatting Rules:
 - Start with a dynamic day header like:
-  💻 **Day ${timelineItem.day} — [short motivational or progress phrase]**
+  💻 Day \${timelineItem.day} — [short motivational or progress phrase]  
   Examples:  
-  - 💻 **Day 5 — Keeping the Streak Alive**  
-  - ⚙️ **Day 3 — Deep in the Code Grind**  
-  - 🚀 **Day 7 — Consistency Over Intensity**  
-  - 🧠 **Day 10 — Learning by Building**  
+  - 💻 Day 5 — Keeping the Streak Alive  
+  - ⚙️ Day 3 — Deep in the Code Grind  
+  - 🚀 Day 7 — Consistency Over Intensity  
+  - 🧠 Day 10 — Learning by Building  
 
-- Immediately after, add a bold or italic **title line** related to today's topic or task, e.g.:
-  🔧 *${timelineItem.topic}*  
+- Add a **title line** related to today's topic or task:
+  🔧 \${timelineItem.topic}  
   or  
-  🛠️ **${timelineItem.todayTask}**
+  🛠️ \${timelineItem.todayTask}
 
-- Then, use the following clean structure:
+- Then follow this structure:
   🧩 **Focus —** Describe what you worked on today and why it mattered.  
   🚧 **Challenge —** Explain the main technical or design struggle you faced.  
   💡 **Lesson —** Share what you learned, improved, or realized.  
 
-- End with 1–2 lines reflecting your daily progress and commitment, then add a light, friendly question prefixed with 🤔 to invite discussion.
+- Use **bold** selectively for key technologies, tools, or insights (e.g., **NestJS**, **TypeORM**, **PostgreSQL**, **Redis**, **DTOs**).  
+  Keep emphasis balanced — 5–8 bolded words total for readability.
+
+- End with a natural, human reflection or observation (avoid AI-style “Feeling accomplished…” lines).  
+  Examples:  
+  - "Still amazed how much clarity comes after untangling messy logic."  
+  - "This part took longer than planned, but the architecture feels right now."  
+  - "Small wins like this make the grind worthwhile."  
+  - "Tomorrow, I’ll tackle the integration tests — excited to see it all connect."  
+  Then close with a short, friendly discussion question prefixed by 🤔.
 
 ✨ Writing Style:
-- Keep paragraphs short (1–3 lines each).  
-- Use 3–5 emojis total for visual rhythm — subtle, not flashy.  
-- Keep tone authentic, humble, and curious — not promotional.  
-- Use **bold** for key terms (e.g., tools, frameworks, insights).  
-- Avoid hashtags, excessive punctuation, or hype language.  
-- Leave blank lines between sections for readability.  
+- Short paragraphs (1–3 lines).  
+- 3–5 emojis total — subtle, not flashy.  
+- Bold key points and section labels for scannability.  
+- Tone: authentic, curious, humble — developer-to-developer.  
+- No hashtags or marketing fluff.  
+- Leave clean blank lines for readability.
 
 📘 Example Output:
 ---
-💻 **Day 5 — Keeping the Streak Alive**
+💻 Day 2 — Building the Backbone of Our App  
 
-🔧 **Building the Foundations for Microservices**
+🔧 Database Schema Design  
 
 🧩 **Focus —**  
-Today was all about laying the groundwork for **DevSync’s MainService** and **ChatService** using **NestJS** and **Node.js**. I integrated **Redis Pub/Sub** for smoother microservice communication — a choice that boosts speed and reliability for real-time collaboration.
+Spent the day designing the **PostgreSQL** schema to manage structured data like **users**, **organizations**, and **tasks**. Using **TypeORM** made mapping these entities to **NestJS** models smoother and kept migrations predictable. For chat messages and logs, **MongoDB** handled the unstructured data side perfectly.
 
 🚧 **Challenge —**  
-Defining clear service boundaries turned out trickier than expected. Each microservice needs to own its domain while still playing nicely with others. Finding that balance took some iteration and patience.
+Maintaining consistency between **PostgreSQL** and **MongoDB** was more complex than expected. I had to clearly define data ownership and add lightweight transaction logic to keep both sides in sync.
 
 💡 **Lesson —**  
-Creating clear **DTOs (Data Transfer Objects)** for each service contract helped clarify dependencies and streamline communication.
+Separating responsibilities across databases brought clarity — each system does what it’s best at, without stepping on the other’s toes.
 
-🔥 Day 5 done — consistency over intensity.  
-🤔 How do you usually approach defining service boundaries in your projects?
+This part took longer than planned, but the structure finally feels right.  
+🤔 Have you ever mixed SQL and NoSQL in one project? How did you handle it?
 ---
-
 Now, generate the full LinkedIn post following this tone, structure, and visual style.
 `;
+
 
 
 
