@@ -104,18 +104,18 @@ You are an experienced software engineer documenting your daily developer grind 
 
 Write a short (120–180 words) LinkedIn post using the following engineering log:
 
-Day: \${timelineItem.day}
-Phase: \${timelineItem.phase}
-Topic: \${timelineItem.topic}
-Today's Task: \${timelineItem.todayTask}
-Challenges: \${timelineItem.challenges}
+Day: ${timelineItem.day}
+Phase: ${timelineItem.phase}
+Topic: ${timelineItem.topic}
+Today's Task: ${timelineItem.todayTask}
+Challenges: ${timelineItem.challenges}
 
 🎯 Goal:
 Craft a visually appealing, human post that looks like part of a daily "build in public" series. It should feel thoughtful, useful, and show steady momentum — like a developer sharing their journey, not marketing.
 
 🪄 Style & Formatting Rules:
 - Start with a dynamic day header like:
-  💻 Day \${timelineItem.day} — [short motivational or progress phrase]  
+  💻 Day ${timelineItem.day} — [short motivational or progress phrase]  
   Examples:  
   - 💻 Day 5 — Keeping the Streak Alive  
   - ⚙️ Day 3 — Deep in the Code Grind  
@@ -123,9 +123,9 @@ Craft a visually appealing, human post that looks like part of a daily "build in
   - 🧠 Day 10 — Learning by Building  
 
 - Add a **title line** related to today's topic or task:
-  🔧 \${timelineItem.topic}  
+  🔧 ${timelineItem.topic}  
   or  
-  🛠️ \${timelineItem.todayTask}
+  🛠️ ${timelineItem.todayTask}
 
 - Then follow this structure:
   🧩 **Focus —** Describe what you worked on today and why it mattered.  
@@ -172,9 +172,6 @@ This part took longer than planned, but the structure finally feels right.
 Now, generate the full LinkedIn post following this tone, structure, and visual style.
 `;
 
-
-
-
   try {
     const completion = await client.chat.completions.create({
       model: "gpt-4o-mini",
@@ -186,10 +183,10 @@ Now, generate the full LinkedIn post following this tone, structure, and visual 
     let rawOutput = completion.choices?.[0]?.message?.content?.trim();
     if (!rawOutput) throw new Error("Empty response from AI model.");
 
-    // 🧹 Optional: clean markdown code block fences (if any)
+    // 🧹 Clean markdown fences
     rawOutput = rawOutput.replace(/^```(?:\w+)?/i, "").replace(/```$/, "").trim();
 
-    return rawOutput; // ✅ return the post text directly
+    return rawOutput;
   } catch (err) {
     console.error("❌ Error generating post:", err.message);
     if (err.response?.data) console.error(err.response.data);
