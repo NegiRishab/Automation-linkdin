@@ -122,21 +122,21 @@ Craft a visually appealing, human post that looks like part of a daily "build in
   - 🚀 Day 7 — Consistency Over Intensity  
   - 🧠 Day 10 — Learning by Building  
 
-- Add a **title line** related to today's topic or task:
+- Add a title line related to today's topic or task:
   🔧 ${timelineItem.topic}  
   or  
   🛠️ ${timelineItem.todayTask}
 
 - Then follow this structure:
-  🧩 **Focus —** Describe what you worked on today and why it mattered.  
-  🚧 **Challenge —** Explain the main technical or design struggle you faced.  
-  💡 **Lesson —** Share what you learned, improved, or realized.  
+  🧩 Focus — Describe what you worked on today and why it mattered.  
+  🚧 Challenge — Explain the main technical or design struggle you faced.  
+  💡 Lesson — Share what you learned, improved, or realized.  
 
-- Use **bold** selectively for key technologies, tools, or insights (e.g., **NestJS**, **TypeORM**, **PostgreSQL**, **Redis**, **DTOs**).  
-  Keep emphasis balanced — 5–8 bolded words total for readability.
+- Use natural LinkedIn-style emphasis for key words — capitalize or visually separate important tools, frameworks, or concepts (for example: NestJS, TypeORM, PostgreSQL, Redis, DTOs).  
+  Do NOT use markdown syntax like **text** or *text*.
 
-- End with a natural, human reflection or observation (avoid AI-style “Feeling accomplished…” lines).  
-  Examples:  
+- End with a natural, human reflection or observation (avoid generic AI-like closers such as “Feeling accomplished…”).  
+  Example endings:  
   - "Still amazed how much clarity comes after untangling messy logic."  
   - "This part took longer than planned, but the architecture feels right now."  
   - "Small wins like this make the grind worthwhile."  
@@ -146,30 +146,30 @@ Craft a visually appealing, human post that looks like part of a daily "build in
 ✨ Writing Style:
 - Short paragraphs (1–3 lines).  
 - 3–5 emojis total — subtle, not flashy.  
-- Bold key points and section labels for scannability.  
+- Highlight key points using capitalization or spacing for readability.  
 - Tone: authentic, curious, humble — developer-to-developer.  
-- No hashtags or marketing fluff.  
-- Leave clean blank lines for readability.
+- No hashtags, no markdown, no over-formatting.  
+- Leave clean blank lines between sections.
 
 📘 Example Output:
 ---
-💻 Day 2 — Building the Backbone of Our App  
+💻 Day 3 — Deep in the Code Grind  
 
-🔧 Database Schema Design  
+🔧 User Authentication  
 
-🧩 **Focus —**  
-Spent the day designing the **PostgreSQL** schema to manage structured data like **users**, **organizations**, and **tasks**. Using **TypeORM** made mapping these entities to **NestJS** models smoother and kept migrations predictable. For chat messages and logs, **MongoDB** handled the unstructured data side perfectly.
+🧩 Focus —  
+Today, I implemented secure user authentication in our MainService using NestJS Passport. I chose the JWT strategy for its stateless nature, which fits perfectly with our microservices architecture. I also focused on role-based access control to ensure users have proper permissions across the platform.
 
-🚧 **Challenge —**  
-Maintaining consistency between **PostgreSQL** and **MongoDB** was more complex than expected. I had to clearly define data ownership and add lightweight transaction logic to keep both sides in sync.
+🚧 Challenge —  
+Integrating JWT across multiple microservices wasn’t straightforward. To solve it, I created a shared authentication module that centralizes token validation logic, making it reusable and easier to maintain.
 
-💡 **Lesson —**  
-Separating responsibilities across databases brought clarity — each system does what it’s best at, without stepping on the other’s toes.
+💡 Lesson —  
+This reinforced the importance of modular design in distributed systems. Centralizing authentication simplified integration and boosted both security and clarity.
 
-This part took longer than planned, but the structure finally feels right.  
-🤔 Have you ever mixed SQL and NoSQL in one project? How did you handle it?
+Took a few late-night debugging sessions, but seeing smooth logins across services felt worth it.  
+🤔 How do you usually manage authentication across your microservices?
 ---
-Now, generate the full LinkedIn post following this tone, structure, and visual style.
+Now, generate the full LinkedIn post following this tone, structure, and visual style — without using any markdown symbols or formatting characters like ** or *.
 `;
 
   try {
@@ -183,10 +183,15 @@ Now, generate the full LinkedIn post following this tone, structure, and visual 
     let rawOutput = completion.choices?.[0]?.message?.content?.trim();
     if (!rawOutput) throw new Error("Empty response from AI model.");
 
-    // 🧹 Clean markdown fences
-    rawOutput = rawOutput.replace(/^```(?:\w+)?/i, "").replace(/```$/, "").trim();
+    // 🧹 Clean up code fences or stray formatting
+    rawOutput = rawOutput
+      .replace(/^```(?:\w+)?/gm, "")
+      .replace(/```$/gm, "")
+      .replace(/\*\*/g, "") // remove markdown bold markers if any sneak in
+      .replace(/\*/g, "")   // remove stray single asterisks too
+      .trim();
 
-    return rawOutput;
+    return rawOutput; // ✅ Return clean LinkedIn post text
   } catch (err) {
     console.error("❌ Error generating post:", err.message);
     if (err.response?.data) console.error(err.response.data);

@@ -28,6 +28,6 @@ export async function createLinkedInDraft(content) {
 
     console.log("✅ Draft created:", response.data);
   } catch (err) {
-    console.error("❌ LinkedIn Draft Error:", err.response?.data || err.message);
+    console.error("❌ LinkedIn Draft Error:", err);
   }
 }
