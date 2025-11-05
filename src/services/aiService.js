@@ -98,11 +98,113 @@ s
 };
 
 
+// export const generatePost = async (timelineItem) => {
+//   const prompt = `
+// You are an experienced software engineer documenting your daily developer grind on LinkedIn — sharing authentic, consistent updates that reflect real progress, learning, and persistence.
+
+// Write a short (120–180 words) LinkedIn post using the following engineering log:
+
+// Day: ${timelineItem.day}
+// Phase: ${timelineItem.phase}
+// Topic: ${timelineItem.topic}
+// Today's Task: ${timelineItem.todayTask}
+// Challenges: ${timelineItem.challenges}
+
+// 🎯 Goal:
+// Craft a visually appealing, human post that looks like part of a daily "build in public" series. It should feel thoughtful, useful, and show steady momentum — like a developer sharing their journey, not marketing.
+
+// 🪄 Style & Formatting Rules:
+// - Start with a dynamic day header like:
+//   💻 Day ${timelineItem.day} — [short motivational or progress phrase]  
+//   Examples:  
+//   - 💻 Day 5 — Keeping the Streak Alive  
+//   - ⚙️ Day 3 — Deep in the Code Grind  
+//   - 🚀 Day 7 — Consistency Over Intensity  
+//   - 🧠 Day 10 — Learning by Building  
+
+// - Add a title line related to today's topic or task:
+//   🔧 ${timelineItem.topic}  
+//   or  
+//   🛠️ ${timelineItem.todayTask}
+
+// - Then follow this structure:
+//   🧩 Focus — Describe what you worked on today and why it mattered.  
+//   🚧 Challenge — Explain the main technical or design struggle you faced.  
+//   💡 Lesson — Share what you learned, improved, or realized.  
+
+// - Use natural LinkedIn-style emphasis for key words — capitalize or visually separate important tools, frameworks, or concepts (for example: NestJS, TypeORM, PostgreSQL, Redis, DTOs).  
+//   Do NOT use markdown syntax like **text** or *text*.
+
+// - End with a natural, human reflection or observation (avoid generic AI-like closers such as “Feeling accomplished…”).  
+//   Example endings:  
+//   - "Still amazed how much clarity comes after untangling messy logic."  
+//   - "This part took longer than planned, but the architecture feels right now."  
+//   - "Small wins like this make the grind worthwhile."  
+//   - "Tomorrow, I’ll tackle the integration tests — excited to see it all connect."  
+//   Then close with a short, friendly discussion question prefixed by 🤔.
+
+// ✨ Writing Style:
+// - Short paragraphs (1–3 lines).  
+// - 3–5 emojis total — subtle, not flashy.  
+// - Highlight key points using capitalization or spacing for readability.  
+// - Tone: authentic, curious, humble — developer-to-developer.  
+// - No hashtags, no markdown, no over-formatting.  
+// - Leave clean blank lines between sections.
+
+// 📘 Example Output:
+// ---
+// 💻 Day 3 — Deep in the Code Grind  
+
+// 🔧 User Authentication  
+
+// 🧩 Focus —  
+// Today, I implemented secure user authentication in our MainService using NestJS Passport. I chose the JWT strategy for its stateless nature, which fits perfectly with our microservices architecture. I also focused on role-based access control to ensure users have proper permissions across the platform.
+
+// 🚧 Challenge —  
+// Integrating JWT across multiple microservices wasn’t straightforward. To solve it, I created a shared authentication module that centralizes token validation logic, making it reusable and easier to maintain.
+
+// 💡 Lesson —  
+// This reinforced the importance of modular design in distributed systems. Centralizing authentication simplified integration and boosted both security and clarity.
+
+// Took a few late-night debugging sessions, but seeing smooth logins across services felt worth it.  
+// 🤔 How do you usually manage authentication across your microservices?
+// ---
+// Now, generate the full LinkedIn post following this tone, structure, and visual style — without using any markdown symbols or formatting characters like ** or *.
+// `;
+
+//   try {
+//     const completion = await client.chat.completions.create({
+//       model: "gpt-4o-mini",
+//       messages: [{ role: "user", content: prompt }],
+//       temperature: 0.6,
+//       max_tokens: 1000,
+//     });
+
+//     let rawOutput = completion.choices?.[0]?.message?.content?.trim();
+//     if (!rawOutput) throw new Error("Empty response from AI model.");
+
+//     // 🧹 Clean up code fences or stray formatting
+//     rawOutput = rawOutput
+//       .replace(/^```(?:\w+)?/gm, "")
+//       .replace(/```$/gm, "")
+//       .replace(/\*\*/g, "") // remove markdown bold markers if any sneak in
+//       .replace(/\*/g, "")   // remove stray single asterisks too
+//       .trim();
+
+//     return rawOutput; // ✅ Return clean LinkedIn post text
+//   } catch (err) {
+//     console.error("❌ Error generating post:", err.message);
+//     if (err.response?.data) console.error(err.response.data);
+//     throw err;
+//   }
+// };
+
+
 export const generatePost = async (timelineItem) => {
   const prompt = `
-You are an experienced software engineer documenting your daily developer grind on LinkedIn — sharing authentic, consistent updates that reflect real progress, learning, and persistence.
+You are an experienced software engineer documenting your daily developer grind on LinkedIn — sharing real, concise, and visually balanced updates that show genuine progress and learning.
 
-Write a short (120–180 words) LinkedIn post using the following engineering log:
+Write a short (120–170 words) LinkedIn post using this log:
 
 Day: ${timelineItem.day}
 Phase: ${timelineItem.phase}
@@ -111,91 +213,86 @@ Today's Task: ${timelineItem.todayTask}
 Challenges: ${timelineItem.challenges}
 
 🎯 Goal:
-Craft a visually appealing, human post that looks like part of a daily "build in public" series. It should feel thoughtful, useful, and show steady momentum — like a developer sharing their journey, not marketing.
+Create a post that feels personal and thoughtful — like a "build in public" update. It should highlight effort, clarity, and curiosity rather than marketing tone.
 
 🪄 Style & Formatting Rules:
-- Start with a dynamic day header like:
-  💻 Day ${timelineItem.day} — [short motivational or progress phrase]  
+- Start with a dynamic day header:
+  💻 DAY ${timelineItem.day} — [short motivational or progress phrase]  
   Examples:  
-  - 💻 Day 5 — Keeping the Streak Alive  
-  - ⚙️ Day 3 — Deep in the Code Grind  
-  - 🚀 Day 7 — Consistency Over Intensity  
-  - 🧠 Day 10 — Learning by Building  
+  💻 DAY 5 — KEEPING THE STREAK ALIVE  
+  ⚙️ DAY 3 — DEEP IN THE CODE GRIND  
+  🚀 DAY 7 — CONSISTENCY OVER INTENSITY  
+  🧠 DAY 10 — LEARNING BY BUILDING  
 
-- Add a title line related to today's topic or task:
-  🔧 ${timelineItem.topic}  
+- Add a title line in CAPS related to today's topic:
+  🔧 ${timelineItem.topic.toUpperCase()}  
   or  
-  🛠️ ${timelineItem.todayTask}
+  🛠️ ${timelineItem.todayTask.toUpperCase()}
 
-- Then follow this structure:
+- Use this structure:
   🧩 Focus — Describe what you worked on today and why it mattered.  
-  🚧 Challenge — Explain the main technical or design struggle you faced.  
-  💡 Lesson — Share what you learned, improved, or realized.  
+  🚧 Challenge — Explain the main technical struggle.  
+  💡 Lesson — Share what you learned or improved.  
 
-- Use natural LinkedIn-style emphasis for key words — capitalize or visually separate important tools, frameworks, or concepts (for example: NestJS, TypeORM, PostgreSQL, Redis, DTOs).  
-  Do NOT use markdown syntax like **text** or *text*.
+- Keep sentences short (1–2 lines max).  
+  Use spacing for readability between ideas.
 
-- End with a natural, human reflection or observation (avoid generic AI-like closers such as “Feeling accomplished…”).  
-  Example endings:  
-  - "Still amazed how much clarity comes after untangling messy logic."  
-  - "This part took longer than planned, but the architecture feels right now."  
-  - "Small wins like this make the grind worthwhile."  
-  - "Tomorrow, I’ll tackle the integration tests — excited to see it all connect."  
-  Then close with a short, friendly discussion question prefixed by 🤔.
+- Whenever you mention tech or tools (like NestJS, JWT, PostgreSQL, TypeORM, Redis, MongoDB, Docker, Microservices, etc.),  
+  replace them with **LinkedIn-style hashtags** (example: #NestJS, #JWT, #Microservices).  
+  Use 5–8 hashtags across the post — some inline, and 2–3 at the end.
 
-✨ Writing Style:
-- Short paragraphs (1–3 lines).  
-- 3–5 emojis total — subtle, not flashy.  
-- Highlight key points using capitalization or spacing for readability.  
-- Tone: authentic, curious, humble — developer-to-developer.  
-- No hashtags, no markdown, no over-formatting.  
-- Leave clean blank lines between sections.
+- Avoid markdown (** or *), links, or emoji overload.  
+  Use 3–5 emojis total for visual balance.
+
+- End naturally — reflect on the day or progress, not with robotic lines like “Feeling accomplished.”  
+  Then add a short, friendly question prefixed by 🤔 to invite discussion.
 
 📘 Example Output:
 ---
-💻 Day 3 — Deep in the Code Grind  
+💻 DAY 3 — PROGRESS IN THE CODE LAB  
 
-🔧 User Authentication  
+🔧 USER AUTHENTICATION  
 
 🧩 Focus —  
-Today, I implemented secure user authentication in our MainService using NestJS Passport. I chose the JWT strategy for its stateless nature, which fits perfectly with our microservices architecture. I also focused on role-based access control to ensure users have proper permissions across the platform.
+Today I worked on secure user authentication in our MainService using #NestJS Passport.  
+I went with the #JWT strategy for its stateless nature — a great fit for our #Microservices architecture.  
+I also added role-based access control to ensure users get only the permissions they need.  
 
 🚧 Challenge —  
-Integrating JWT across multiple microservices wasn’t straightforward. To solve it, I created a shared authentication module that centralizes token validation logic, making it reusable and easier to maintain.
+Integrating #JWT across multiple #Microservices was tricky.  
+To handle it, I built a shared authentication module that centralizes token validation — reusable and easy to maintain.  
 
 💡 Lesson —  
-This reinforced the importance of modular design in distributed systems. Centralizing authentication simplified integration and boosted both security and clarity.
+This reinforced how much modular design matters in distributed systems.  
+By centralizing authentication, I simplified integration while improving both security and clarity.  
 
-Took a few late-night debugging sessions, but seeing smooth logins across services felt worth it.  
-🤔 How do you usually manage authentication across your microservices?
+A few late-night debugging sessions later, seeing smooth logins across services felt totally worth it.  
+🤔 How do you handle authentication in your #Microservices?  
+
+#BackendDevelopment #BuildInPublic #SoftwareEngineering
 ---
-Now, generate the full LinkedIn post following this tone, structure, and visual style — without using any markdown symbols or formatting characters like ** or *.
+
+Now, generate the full LinkedIn post following this tone, structure, and visual style — without markdown, links, or promotional tone.
 `;
 
   try {
     const completion = await client.chat.completions.create({
       model: "gpt-4o-mini",
       messages: [{ role: "user", content: prompt }],
-      temperature: 0.6,
+      temperature: 0.7,
       max_tokens: 1000,
     });
 
     let rawOutput = completion.choices?.[0]?.message?.content?.trim();
     if (!rawOutput) throw new Error("Empty response from AI model.");
 
-    // 🧹 Clean up code fences or stray formatting
-    rawOutput = rawOutput
-      .replace(/^```(?:\w+)?/gm, "")
-      .replace(/```$/gm, "")
-      .replace(/\*\*/g, "") // remove markdown bold markers if any sneak in
-      .replace(/\*/g, "")   // remove stray single asterisks too
-      .trim();
+    // Clean any accidental markdown or code fences
+    rawOutput = rawOutput.replace(/^```(?:\w+)?/i, "").replace(/```$/, "").trim();
 
-    return rawOutput; // ✅ Return clean LinkedIn post text
+    return rawOutput;
   } catch (err) {
     console.error("❌ Error generating post:", err.message);
     if (err.response?.data) console.error(err.response.data);
     throw err;
   }
 };
-
