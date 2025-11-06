@@ -14,6 +14,10 @@ const PORT = process.env.PORT || 3000;
     console.log("✅ Connected to MongoDB");
 // 🩺 Health check route
 app.get("/health", (req, res) => {
+  res.status(200).send("ok");
+});
+
+app.get("/health/details", (req, res) => {
   res.status(200).json({
     status: "ok",
     message: "LinkedIn automation backend is running 🚀",
