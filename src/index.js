@@ -25,11 +25,11 @@ app.get("/health/details", (req, res) => {
   });
 });
 
-cron.schedule("31 11 * * *", async () => {
-  console.log("🚀 Running daily LinkedIn poster job at 11:30 AM...");
+cron.schedule("0 13 * * 1-5", async () => {
+  console.log("🚀 Running daily LinkedIn poster job at 1:00 PM IST (Mon–Fri)...");
   await runDailyPoster();
 }, {
-  timezone: "Asia/Kolkata", // ensures it runs at 11:30 AM IST
+  timezone: "Asia/Kolkata", // ensures 1:00 PM India time
 });
 
 // Optional: manual trigger route (for debugging)
